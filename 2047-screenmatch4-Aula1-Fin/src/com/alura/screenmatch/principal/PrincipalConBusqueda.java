@@ -20,6 +20,8 @@ public class PrincipalConBusqueda {
 
         String direccion = "https://www.omdbapi.com/?t=" + busqueda + "&apikey=d4d0bf92";
 
+        try {
+
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(direccion))
@@ -36,13 +38,18 @@ public class PrincipalConBusqueda {
         TituloOmdb miTituloOmdb = gson.fromJson(json, TituloOmdb.class);
         System.out.println(miTituloOmdb);
 
-        try {
             Titulo miTitulo = new Titulo(miTituloOmdb);
             System.out.println("Titulo ya convertido: " + miTitulo);
         } catch (NumberFormatException e) {
             System.out.println("Ocurrió un error: ");
             System.out.println(e.getMessage());
+        } catch (IllegalArgumentException e){
+            System.out.println("Error en la URI, verifique la dirección.");
+        } catch (Exception e) {
+            System.out.println("Ocurrió un error inesperado...");
         }
+
+
 
         System.out.println("Finalizó la ejecución del Programa.-");
 
